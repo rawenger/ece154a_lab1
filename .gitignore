@@ -6,3 +6,5 @@
 *.vstf
 *.wlf
 work
+*.vcd
+*.mpf
