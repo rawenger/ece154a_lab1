@@ -1,0 +1,8 @@
+.settings
+*.xml
+*.bak
+*.mti
+*.mtf
+*.vstf
+*.wlf
+work
