@@ -17,7 +17,7 @@ module alu(
             // ADD
             3'b?10: y = a + b;
             // SUB
-            3'b110: y = a - b;
+            3'b110: y = a + (~b + 1'b1);
             // SLT
             3'b111: y = (a < b);
             default: break;
