@@ -8,3 +8,5 @@
 work
 *.vcd
 *.mpf
+.project
+.DS_Store
