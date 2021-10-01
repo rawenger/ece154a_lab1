@@ -8,22 +8,8 @@ module alu(
 	output [31:0] y,
 	output zero
 );
-//    always @(*) begin
-//        casez (f)
-//            // AND
-//            3'b?00: y = a & b; 
-//            // OR
-//            3'b?01: y = a | b;
-//            // ADD
-//            3'b010: y = a + b;
-//            // SUB
-//            3'b110: y = a + (~b + 1'b1);
-//            // SLT
-//            3'b111: y = (a < b);
-//            default: break;
-//        endcase
-//        zero = (y == 32'b0);
-//    end
+
+//TODO: add a test case for the no-op! (f = 011)
     
     wire [3:0] enables;
     decoder2to4 op(.in(f[1:0]), .out(enables));
