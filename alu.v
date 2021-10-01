@@ -28,11 +28,13 @@ module alu(
     wire [3:0] enables;
     decoder2to4 op(.in(f[1:0]), .out(enables));
     
-    andgate AND(.enb(enables[0]), .a(a), .b(b), .y(y));
-    orgate OR(.enb(enables[1]), .a(a), .b(b), .y(y));
-    adder ADD(.enb(enables[2]), .a(a), .b(f[2] ? (~b + 1'b1) : b), .y(y));
-    comparator SLT(.enb(enables[3] & f[2]), .a(a), .b(b), .y(y));
+    wire [31:0] and_out, or_out, add_out, cmp_out;
+    andgate AND(.enb(enables[0]), .a(a), .b(b), .y(and_out));
+    orgate OR(.enb(enables[1]), .a(a), .b(b), .y(or_out));
+    adder ADD(.enb(enables[2]), .a(a), .b(f[2] ? (~b + 1'b1) : b), .y(add_out));
+    comparator SLT(.enb(enables[3] & f[2]), .a(a), .b(b), .y(cmp_out));
     
+    assign y = (enables[3] === 1 && f[2] === 0) ? y : (and_out | or_out | add_out | cmp_out);
     assign zero = (y === 32'b0) ;
     
 endmodule
@@ -64,7 +66,7 @@ module andgate(
     input [31:0] a, b,
     output [31:0] y
     );
-    assign y = enb ? (a & b) : y;
+    assign y = enb ? (a & b) : 0;
 endmodule
 
 // 32-bit OR gate
@@ -73,7 +75,7 @@ module orgate(
     input [31:0] a, b,
     output [31:0] y
     );
-    assign y = enb ? (a | b) : y;
+    assign y = enb ? (a | b) : 0;
 endmodule
 
 // 32-bit adder
@@ -82,7 +84,7 @@ module adder(
     input [31:0] a, b,
     output [31:0] y
     );
-    assign y = enb ? (a + b) : y;
+    assign y = enb ? (a + b) : 0;
 endmodule
 
 // 32-bit comparator
@@ -91,5 +93,5 @@ module comparator(
     input [31:0] a, b,
     output [31:0] y
     );
-    assign y = enb ? (a < b) : y;
+    assign y = enb ? ((a - b) > 32'b1) : 0;
 endmodule
