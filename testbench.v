@@ -1,5 +1,5 @@
 `timescale 1ns / 1ns
-`define NUM_TESTS 25
+`define NUM_TESTS 21
 //`define VECTORSIZE (`NUM_TEST*5 - 1)
 
 module alu_tb;

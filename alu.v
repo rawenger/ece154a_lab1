@@ -9,8 +9,6 @@ module alu(
 	output zero
 );
 
-//TODO: add a test case for the no-op! (f = 011)
-    
     wire [3:0] enables;
     decoder2to4 op(.in(f[1:0]), .out(enables));
     
