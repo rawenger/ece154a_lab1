@@ -1,5 +1,6 @@
 `timescale 1ns / 1ns
-`define NUM_TESTS 20
+`define NUM_TESTS 25
+//`define VECTORSIZE (`NUM_TEST*5 - 1)
 
 module alu_tb;
 
@@ -10,7 +11,7 @@ logic [2:0] f;
 wire [31:0] y;
 wire zero;
 
-logic [31:0] testvectors [99:0];
+logic [31:0] testvectors [`NUM_TESTS*5-1:0];
 integer rownum, errors;
 logic [31:0] test_y;
 logic test_zero;
@@ -30,7 +31,6 @@ end
 
 // apply test vectors at rising clock edge
 always @(posedge clk) begin
-	#1;
 	f = testvectors[0 + 5*rownum];
 	a = testvectors[1 + 5*rownum];
 	b = testvectors[2 + 5*rownum];
