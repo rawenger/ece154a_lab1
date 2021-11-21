@@ -12,9 +12,6 @@ module alu(
     output [31:0] y,
     output zero
 );
-
-//    wire [3:0] enables;
-//    decoder2to4 op(.in(f[1:0]), .out(enables));
     
     wire [31:0] and_out, or_out, add_out, cmp_out;
     andgate AND(.a(a), .b(b), .y(and_out));
@@ -22,12 +19,10 @@ module alu(
     adder ADD(.a(a), .b(f[2] ? (~b + 1'b1) : b), .y(add_out));
     comparator SLT(.a(a), .b(b), .y(cmp_out));
     
-//    assign y = (enables[3] === 1 && f[2] === 0) ? y : (and_out | or_out | add_out | cmp_out);
-//    assign zero = (y === 32'b0) ;
-// f = 011 && 
     wire [31:0] aluout;
     mux4to1 mux(f[1:0], and_out, or_out, add_out, cmp_out, aluout);
     assign y = (f === 3'b011) ? y : aluout;
+    assign zero = (y === 32'b0);
 endmodule
 
 // 32-bit AND gate
